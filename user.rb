@@ -1,5 +1,6 @@
 class User
   attr_accessor :bank, :card, :points
+  attr_reader :name
 
   def initialize(name)
     @bank = 100

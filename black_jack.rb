@@ -37,7 +37,9 @@ class BlackJack
         distribution(@dealer) if @dealer.points <= 17
         @viev.visualization_dealer(self, nil)
       when 3
+        distribution(@dealer) if @dealer.card.size == 2 && @dealer.points <= 17
         @viev.open_cards(self, "open")
+        win
         return
       end
       break if user_choice.zero?
@@ -48,7 +50,6 @@ class BlackJack
 #Раздача чел.
   def distribution(player)
     card = @card_deck.new_cards.sample
-    # @used_cards << card
     @card_deck.card_delete(card)
     player.card.push(card)
     player.points += card.card_points
@@ -61,36 +62,28 @@ class BlackJack
 
   end
 
-  # def distribution_dealer
-  #   card = @card_deck.new_cards.sample
-  #   @used_cards << card
-  #   @card_deck.card_delete(card)
-  #   @dealer.card.push(card)
-  #   @dealer_points += card.card_points
-  # end
+  def win
+    if @user.points > @dealer.points && @user.points <= 21
+      @bank -= 20 && @user.bank += 20
+      @viev.visualization_win(self, 1)
+    elsif @user.points <= 21 && @dealer.points > 21
+      @bank -= 20 && @user.bank += 20
+      @viev.visualization_win(self, 1)
+    elsif @user.points == @dealer.points && @user.points <= 21
+      @viev.visualization_win(self, 2)
+    elsif @user.points == @dealer.points && @user.points >= 21
+      @viev.visualization_win(self, 3)
+    else
+      @bank -= 20 && @dealer.bank += 20
+      @viev.visualization_win(self, 4)
+    end
 
+  end
   #Ставка
   def bet
     @user.bank -= 10
     @dealer.bank -= 10
     @bank += 20
   end
-
-  # def visualization_user
-  #   puts "Ваши карты:"
-  #   @user.card.each do |card|
-  #     print card.card_name
-  #     puts card.card_suits
-  #   end
-  #   puts "Денег осталось: #{@user.bank}"
-  #   puts "Ваши очки: #{@user.points}"
-  # end
-
-  # def visualization_dealer
-  #   puts "Карты дилера:"
-  #   puts "*" * @dealer.card.length
-  #   puts "Денег осталось: #{@dealer.bank}"
-  #   puts "Дилера очки: #{@dealer.points}"
-  # end
 
 end
