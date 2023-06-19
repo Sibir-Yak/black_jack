@@ -3,7 +3,8 @@ class Card_Deck
   attr_reader :new_cards, :used_cards
 
   CARDS_WITH_NUMBERS = (2..10).to_a
-  CARDS_WITH_PICTURE = [ 'J', 'Q', 'K', 'A']
+  CARDS_WITH_PICTURE = [ 'J', 'Q', 'K']
+  # CARDS_WITH_A = ['A']
   CARD_SUITS = ['♥', '♠', '♣', '♦']
 
   def initialize
@@ -13,12 +14,13 @@ class Card_Deck
     #Неиспользованные карты
     @new_cards = []
     #Использованные карты
-    @used_cards = []
+    # @used_cards = []
   end
 
   def deck_building
     deck_building_num
     deck_building_pic
+    deck_building_a
   end
 
   #Cоздание колоды
@@ -35,6 +37,12 @@ class Card_Deck
       CARD_SUITS.each do |suits|
         @new_cards << Cards.new(card, 10, suits)
       end
+    end
+  end
+
+  def deck_building_a
+    CARD_SUITS.each do |suits|
+      @new_cards << Cards.new('A', 11, suits)
     end
   end
 

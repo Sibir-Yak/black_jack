@@ -52,7 +52,13 @@ class BlackJack
     card = @card_deck.new_cards.sample
     @card_deck.card_delete(card)
     player.card.push(card)
-    player.points += card.card_points
+    if player.points <= 10 && card.card_name == 'A'
+      player.points += card.card_points
+    elsif player.points > 10 && card.card_name == 'A'
+      player.points += 1
+    else
+      player.points += card.card_points
+    end
 
     # puts @used_cards[-1].card_name
     # puts @card_deck.new_cards.length
@@ -63,6 +69,8 @@ class BlackJack
   end
 
   def win
+    correction_points(@user)
+    correction_points(@dealer)
     if @user.points > @dealer.points && @user.points <= 21
       @bank -= 20 && @user.bank += 20
       @viev.visualization_win(self, 1)
@@ -70,14 +78,35 @@ class BlackJack
       @bank -= 20 && @user.bank += 20
       @viev.visualization_win(self, 1)
     elsif @user.points == @dealer.points && @user.points <= 21
+      @bank -= 20 && @user.bank += 10 && @dealer.bank += 10
       @viev.visualization_win(self, 2)
-    elsif @user.points == @dealer.points && @user.points >= 21
+    elsif @user.points == @dealer.points && @user.points > 21
+      @viev.visualization_win(self, 3)
+    elsif @user.points > 21 && @dealer.points > 21
       @viev.visualization_win(self, 3)
     else
       @bank -= 20 && @dealer.bank += 20
       @viev.visualization_win(self, 4)
     end
+    another_game
+  end
 
+#Убираем 10 очков если есть тузец, а очей многовато.
+  def correction_points(player)
+    player.card.each do |card|
+      card_name = card.card_name
+      if player.points > 21 && card_name == 'A'
+        player.points -= 10
+      end
+    end
+
+  end
+
+  def another_game
+    @passed_stage.clear
+    @dealer.card.clear && @user.card.clear
+    @dealer.points = 0 && @user.points = 0
+    start
   end
   #Ставка
   def bet

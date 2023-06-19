@@ -51,33 +51,43 @@ class Visualization
     user_money = black_jack.user.bank
     dealer_money = black_jack.dealer.bank
     case num
-      when 1
-        puts "Вы #{black_jack.user.name} ПОБЕДИЛИ"
-        puts "Ваши очки: #{user_points} Очки дилера: #{dealer_points}"
-        puts "Ваши монеты: #{user_money} Монеты дилера: #{dealer_money}"
-      when 2
-        puts "НИЧЬЯ"
-        puts "Ваши очки: #{user_points} Очки дилера: #{dealer_points}"
-        puts "Ваши монеты: #{user_money} Монеты дилера: #{dealer_money}"
-      when 3
-        puts "НИЧЬЯ, оба просрали"
-        puts "Ваши очки: #{user_points} Очки дилера: #{dealer_points}"
-        puts "Ваши монеты: #{user_money} Монеты дилера: #{dealer_money}"
-      when 4
-        puts "Ув. #{black_jack.user.name} Дилер победил"
-        puts "Ваши очки: #{user_points} Очки дилера: #{dealer_points}"
-        puts "Ваши монеты: #{user_money} Монеты дилера: #{dealer_money}"
+    when 1
+      puts "Вы #{black_jack.user.name} ПОБЕДИЛИ"
+      puts "Ваши очки: #{user_points} Очки дилера: #{dealer_points}"
+      puts "Ваши монеты: #{user_money} Монеты дилера: #{dealer_money}"
+    when 2
+      puts "НИЧЬЯ"
+      puts "Ваши очки: #{user_points} Очки дилера: #{dealer_points}"
+      puts "Ваши монеты: #{user_money} Монеты дилера: #{dealer_money}"
+    when 3
+      puts "НИЧЬЯ, оба просрали"
+      puts "Ваши очки: #{user_points} Очки дилера: #{dealer_points}"
+      puts "Ваши монеты: #{user_money} Монеты дилера: #{dealer_money}"
+    when 4
+      puts "Ув. #{black_jack.user.name} Дилер победил"
+      puts "Ваши очки: #{user_points} Очки дилера: #{dealer_points}"
+      puts "Ваши монеты: #{user_money} Монеты дилера: #{dealer_money}"
     end
+    if user_money == 0
+      puts "Денег у вас нет. До свидания"
+      abort
+    elsif dealer_money == 0
+      puts "Диллер всё проиграл"
+      abort
+    else
+      another_game
+    end
+  end
 
-    # if @user.points > @dealer.points && @user.points <= 21
-    #   puts "Вы ПОБЕДИЛИ"
-    #   puts "Ваши очки: #{@user.points} Очки дилера: #{@dealer.points}"
-    # elsif @user.points == @user.points && @user.points <= 21
-    #   puts "НИЧЬЯ"
-    #   puts "Ваши очки: #{@user.points} Очки дилера: #{@dealer.points}"
-    # elsif @user.points == @user.points && @user.points >= 21
-    #   puts "НИЧЬЯ"
-    #   puts "Ваши очки: #{@user.points} Очки дилера: #{@dealer.points}"
-    # end
+  def another_game
+    puts "Еще катаем?"
+    puts "1) Еще"
+    puts "2) Хватит"
+    case gets.chomp.to_i
+    when 1
+      return
+    when 2
+      abort
+    end
   end
 end
