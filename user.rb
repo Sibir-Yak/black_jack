@@ -1,12 +1,8 @@
-class User
-  attr_accessor :bank, :card, :points
-  attr_reader :name
+# frozen_string_literal: true
 
+class User < Player
   def initialize(name)
-    @bank = 100
+    super
     @name = name
-    @card = []
-    @points = 0
   end
-
 end

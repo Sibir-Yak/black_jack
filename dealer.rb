@@ -1,9 +1,8 @@
-class Dealer
-  attr_accessor :bank, :card, :points
+# frozen_string_literal: true
 
-  def initialize
-    @bank = 100
-    @card = []
-    @points = 0
+class Dealer < Player
+  def initialize(_name = '')
+    super
+    @name = 'крыса дилер'
   end
 end

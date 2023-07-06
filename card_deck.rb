@@ -1,29 +1,24 @@
-class Card_Deck
+# frozen_string_literal: true
 
-  attr_reader :new_cards, :used_cards
+class CardDeck
+  attr_reader :new_cards
 
   CARDS_WITH_NUMBERS = (2..10).to_a
-  CARDS_WITH_PICTURE = [ 'J', 'Q', 'K']
-  # CARDS_WITH_A = ['A']
-  CARD_SUITS = ['♥', '♠', '♣', '♦']
+  CARDS_WITH_PICTURE = %w[J Q K].freeze
+  CARD_SUITS = ['♥', '♠', '♣', '♦'].freeze
 
   def initialize
-    # @cards_with_numbers = (2..10).to_a
-    # @cards_with_picture = [ 'J', 'Q', 'K', 'A']
-    # @card_suits = ['♥', '♠', '♣', '♦']
-    #Неиспользованные карты
+    # Неиспользованные карты
     @new_cards = []
-    #Использованные карты
-    # @used_cards = []
-  end
-
-  def deck_building
     deck_building_num
     deck_building_pic
     deck_building_a
+    @new_cards.shuffle! # Перемешать
   end
 
-  #Cоздание колоды
+  private
+
+  # Cоздание колоды
   def deck_building_num
     CARDS_WITH_NUMBERS.each do |card|
       CARD_SUITS.each do |suits|
@@ -44,10 +39,5 @@ class Card_Deck
     CARD_SUITS.each do |suits|
       @new_cards << Cards.new('A', 11, suits)
     end
-  end
-
-  #Удаляем сигранную карту delete(train)
-  def card_delete(card)
-    @new_cards.delete(card)
   end
 end
